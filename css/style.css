@@ -1,0 +1,689 @@
+html {
+    box-sizing: border-box;
+}
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+/* Для img обязательно ставим display: block; 
+max-width: 100%; - изображение будет сжиматься - если экран будет меньше чем само изображение, полосы прокрутки обрязовываться не будет */
+img {
+    display: block;
+    max-width: 100%;
+}
+/* все что выше - мы ставим всегда, чтобы пэдинги не влияли на размеры элементов */
+
+h1, h2, h3, h4, h5, h6, p {
+    padding: 0;
+    margin: 0;
+} 
+body {
+    margin: 0;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 400;
+}
+.container {
+    max-width: 1110px;
+    margin: 0 auto;
+}
+
+/* Создаем переменные с помощью root в фигме это стили colors, то есть часто используемые цвета*/
+:root {
+    --accent-color: #F7654A;
+    --dark-color: #404149;
+    --gray-color: #999999;
+    --white-color: #FFFFFF;
+    --background-color: #FFF;
+}
+
+/* Далее создаем классы - стили для текста, которые также берем из фигмы. Эти классы мы потом будем вставлять в теги */
+.text-h2 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 500;
+    font-size: 36px;
+    text-transform: uppercase;
+}
+.text-h3 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+}
+.text-h4 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 500;
+    font-size: 21px;
+    letter-spacing: 0.42px;
+}
+.text-p {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+}
+.text-p-reviews {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    line-height: 21px;
+    color: var(--gray-color);
+}
+
+
+/* Приступаем к оформлению header: 
+1. Ставим минимальную высоту тега как на макете - 740 px
+2. Добавляем ссылку на фоновую каринку - через ../
+3. Убираем повтор фонового изображения
+4. cover - чтобы изображение вписывалось в свои размеры*/
+.header {
+    min-height: 740px;
+    background-image: url(../img/first_screen_bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* Лого и кнопка бургер */
+
+/* Шпаргалка по flex:
+Чтобы выровнять лого и кнопку бургера мы обращаемся к их родителю header__title:
+После display: flex 
+Чтобы было проще настраивать выравнивание элементов - можно на странице разработчика
+щелкнуть на этот тег с классом .header__title. 
+В Styles - появится иконка рядом со словом flex. Нажать на эту иконку*/
+
+/* Шпаргалка по padding и margin (Как лучше их использовать для отступов):
+padding сверзу и слева
+margin - снизу и справа*/
+.header__title {
+    padding-top: 20px;
+    margin-bottom: 112px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end
+}
+.logo {
+    width: 60px;
+    height: 60px;
+}
+
+/* cursor: pointer - создает иконку руки при наведении */
+/* var() - вызывает переменную, которую мы создали в root*/
+/* По умолчанию стоит рамка, убираем ее - border: none */
+/* display: flex - ставим для линий внутри бургера */
+.burger {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    padding: 0;
+    background-color: var(--accent-color);
+    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.burger__line {
+    display: block;
+    background-color: #fff;
+    width: 21px;
+    height: 3px;
+    margin-bottom: 4px;
+}
+/* Чтобы отступы были корректными - у последнего элемента .burger__line
+убираем margin-botton */
+.burger__line:last-child {
+    margin-bottom: 0;
+}
+
+/* Оформляем текст: 
+Все стили можно скопировать с макета фигмы
+margin: 0 auto; - для выравнивания по центру*/
+.h1 {
+    color: var(--White, #FFF);
+    text-align: center;
+    font-size: 64px;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 1.28px;
+    text-transform: uppercase;
+    max-width: 734px;
+    margin: 0 auto 19px;
+}
+
+/* Отступ от верхнего текста - поставим в margin h1 - 19px */
+.h4 {
+    color: var(--White, #FFF);
+    text-align: center;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 27px;
+    text-transform: uppercase;
+    max-width: 734px;
+    margin: 0 auto;
+}
+
+/* position: relative - relative ставится для того чтобы задвинуть наш элемент на предыдущий 
+То есть section с классом about задвигаем на header
+padding-top: 250px; - отступ до раздела container (который с тремя 3 фото)*/
+.about {
+    padding-top: 250px;
+    min-height: 1080px;
+    position: relative;
+}
+
+/* изза position: absolute - сбились все прошлые стили, поэтому придется дорабатывать, дополнительно выравнивать */
+/* Так как margin 0 auto не будет работать изза position: absolute
+То выровнять элемент по центру нам помогут две строчки:
+ left: 50%;
+ transform: translateX(-50%);*/
+
+ /* ставим отступы: padding: 57px 130px; */
+.info {
+    position: absolute;
+    top: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 1110px;
+    min-height: 300px;
+    width: 100%;
+    background-color: #F7F7F7;
+    padding: 57px 130px;
+}
+
+/* Как работать с сетками css grid */
+
+/* Чтобы  4 наши элемента лежали по горизонтали - напишем 2 строчки:
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+4 - это 4 столбца, 1 fr - 1 фракция, которая делится из доступного пространства, 
+если диапазон - 500px, то 500 делится 4
+если диапазон 400 - то 400 делится на 4 и тд
+ТО ширина столбцов всегда разная и зависит от длины диапазона*/
+/* gap: 30px; - расстояние между столбцами */
+/* шпаргалка по display: grid; - в инструментах разработчика рядом с элементом где использовали display: grid
+ - появляется значок grid, нажав на который мы увидим чуть ниже рядом с названием display: grid иконку, нажав на которую появятся свойства
+*/
+.about__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    justify-items: center;
+}
+.about__grid-item {
+    /* background-color: #ddd; */
+    text-align: center;
+    width: 190px;
+}
+.about__h4 {
+    color: var(--Accent, #F7654A);
+    text-align: center;
+    font-size: 72px;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+.about__h5 {
+    color: #000;
+    text-align: center;
+    font-size: 36px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+.about__p {
+    color: var(--gray, #999);
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+/* блок где мы применили  position: absolute; - при зжатии эерана будет отображатьс некорректно
+Для того чтобы этот блок хорошо смотрелся с любых устройств, то есть был адаптивным делаем следующее: */
+
+/* Шпаргалка 
+чтобы было удобнее работать для body установим какой то цвет: background-color: rgb(206, 34, 180); 
+и при сжатии экрана этот цвет должен появиться когда мы сожмем до указанной ширины*/
+
+/* Чтобы не возникали конфликты программы, пишим медиа запросы от большего к меньшему, 
+то есть сначала, например 1280px, потом для 1024px, потом для 768px и тд */
+@media screen and (max-width: 1280px) {
+    /* body {
+        background-color: rgb(206, 34, 180);
+    } */
+    .about__grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+    }
+}
+@media screen and (max-width: 768px) {
+    .info {
+        position: relative;
+        padding: 30px 0;
+    }
+    .about__grid {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+    }
+}
+
+/*Третий раздел */
+.project-h2 {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+/* Для родителя элементов, которые будут стоять по горизонтали ставим  display: flex;*/
+.about__flex {
+    display: flex;
+}
+
+/* max-width: 350px; - ставим максимальную ширину
+ margin-right: 30px; - отступы между элементами, не забываем обнулить отступ у последнего элемента*/
+.about__flex-item {
+    max-width: 350px;
+    margin-right: 30px;
+}
+
+/* Обнуляем margin-right - только у последнего элемента, чтобы при добавлении новых элементов, 
+отступ всегда обнулялся только у последнего */
+.about__flex-item:last-child {
+    margin-right: 0;
+}
+.project-img {
+    margin-bottom: 45px;
+}
+.rectungle {
+    background-color: var(--Accent, #F7654A);
+    width: 55px;
+    height: 6px;
+    margin-bottom: 15px;
+}
+.project-h3 {
+    color: var(--Dark, #404149);
+    margin-bottom: 13px;
+}
+.project-p {
+    color: var(--gray-color);
+}
+
+/* Напишем стили для других устройств, адаптируем под другие устройства при сжимании экрана
+Для предыдущего блока мы тоже делали мелиазапросы.
+Вообще медиазапросы можно сделать общими для всех блоков сайта,
+но лучше делать под каждым блоком, чтобы все было попорядку и чтобы код было читать проще */
+
+/* padding: 450px 15px 110px; - на 1280 px - пропадает наш заголовок, поэтому меняем значения padding у about
+это тег section, родительский тег для этого и предыдущего блока
+ */
+@media screen and (max-width: 1280px) {
+    .about {
+        padding: 450px 15px 110px;
+    }
+}
+
+/* flex-direction: column - чтобы блоки шли друг за другом в одну колонку
+align-items: center; - для того чтобы находились по центру
+Для всего .about поставим padding-top: 150px и  padding-bottom: 80px; - чтобы не было больших отступов на мобильных устройствах
+    }*/
+@media screen and (max-width: 768px) {
+    .about {
+        padding-top: 150px;
+        padding-bottom: 80px;
+    }
+    .about__flex {
+        flex-direction: column;
+        align-items: center;
+    }
+    .about__flex-item {
+        margin-right: 0;
+        margin-bottom: 30px;
+    }
+    .about__flex-item:last-child {
+        margin-bottom: 0;
+    }
+}
+.request {
+    background-color: var(--accent-color);
+    padding-bottom: 40px;
+    padding-top: 30px;
+}
+.request__flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.request__flex-left {
+    color: var(--white-color);    
+}
+.request__h4 {
+    font-size: 48px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.96px;
+    margin-bottom: 6px;
+}
+.request__h5 {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.48px;
+}
+.request__btn {
+    display: flex;
+    align-items: center;
+    padding: 14px 30px;
+    background-color:var(--white-color);
+    border: none;
+    margin-top: 20px;
+    color: #000;
+    font-family: Oswald;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+}
+.request__icon {
+    height: 21px;
+    width: 18px;
+    margin-right: 15px;
+}
+
+
+@media screen and (max-width: 1280px) {
+    .request {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+    
+}
+@media screen and (max-width: 768px) {
+    .request__flex {
+        flex-wrap: wrap;
+    }
+}
+.services {
+    padding: 150px 0;
+    
+}
+.section__h2, .services__h4 {
+    color: #000;
+    text-align: center; 
+}
+.section__h2 {
+    margin-bottom: 55px;
+}
+.services__h4 {
+    margin: 0 auto;
+    max-width: 172px;
+    text-transform: uppercase;
+}
+.services__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 30px;
+    justify-items: center;
+}
+.services__grid-item {
+    background-color: #F7F7F7;
+    padding: 59px 0;
+    width: 350px;
+}
+.services__icon {
+    margin: 0 auto 21px;
+    width: 60px;
+    height: 48px;
+}
+
+@media screen and (max-width: 1280px) {
+    .services {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+    .services__grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+    }
+    .services__grid-item {
+        width: 100%;
+    }
+}
+@media screen and (max-width: 768px) {
+    .services__grid {
+        grid-template-columns: repeat(1, 1fr);
+}
+}
+
+.porfolio__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
+    gap: 0;
+}
+
+@media screen and (max-width: 1280px) {
+    .porfolio__grid {
+        grid-template-columns: repeat(2, 1fr);
+        width: 100%;
+    }
+}
+@media screen and (max-width: 768px) {
+    .porfolio__grid {
+        grid-template-columns: repeat(1, 1fr);
+    } 
+}
+.question {
+    padding-top: 150px;
+    padding-bottom: 108px;
+}
+
+/* Когда мы пишем через пробел два класса - это означает, что один класс назодится в другом */
+.question .section__h2 {
+    margin-bottom: 50px;
+}
+
+.question__h3 {
+    text-transform: uppercase;
+    color: var(--accent-color);
+    margin-bottom: 21px;
+}
+.question__p {
+    margin-bottom: 40px;
+    color: var(--gray-color);
+    max-width: 730px;
+}
+.question__h3.close {
+    margin-bottom: 33px;
+}
+
+/* Когда мы пишем слитно два класса - это означает, что у элемента должны быть эти два класса */
+/* before - псевдоэлемент, который добавляет элемент перед */
+/* display: inline-block;  block - делает элемент блочным, inline - строчным
+inline нам нужен чтобы стрелочка было на одной строке с заголовком,
+а block, чтобы можно было для этого элемента поставить отступ*/
+/* transform: rotate(90deg); - делаем для того чтобы повернуть нашу картинрку */
+.question__h3.open::before,
+.question__h3.close::before {
+    content: "";
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background-image: url(../img/arrow-icon.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 14px;
+}
+.question__h3.open::before {
+    transform: rotate(-90deg);
+}
+/* Если  элемент uestion__p находится на одном уровне с .question__h3.close записывается через +.
+то текст p будет скрываться */
+.question__h3.close + .question__p {
+    display: none;
+}
+@media screen and (max-width: 1280px) {
+    .question {
+        padding: 150px 15px 110px;
+    }
+}
+.partner {
+    padding-top: 100px;
+    padding-bottom: 80px;
+    background-color: var(--dark-color);
+}
+.partner .section__h2 {
+    color: var(--white-color);
+    text-align: center;
+    margin-bottom: 50px;
+}
+/* flex-wrap: wrap; - нужен для того чтобы текст переносился на новую строку */
+.partner__flex {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+.partner__item {
+    margin-right: 30px;
+    margin-bottom: 20px;
+    max-width: 170px;
+}
+/* nth-child(5n) означает - каждый пятый элемент. Но для нашеф ситуации это будет не универсально */
+/* .partner__item:nth-child(5n) {
+    margin-right: 0;
+} */
+
+.partner__item:last-child {
+    margin-right: 0;
+}
+
+@media screen and (max-width: 1280px) {
+    .partner__flex {
+        justify-content: center;
+    }
+    .partner__item {
+        margin-right: 20px;
+        margin-left: 20px;
+    }
+    .partner__item:last-child {
+        margin-right: 20px;
+        margin-left: 20px;
+    }
+}
+.reviews {
+    padding-top: 150px;
+    padding-bottom: 139px;
+}
+.reviews .section__h2 {
+    margin-bottom: 64px;
+}
+.reviews__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.reviews__rectangle {
+    background-color: #F7F7F7;
+    padding: 34px 30px 34px;
+    margin-bottom: 30px;
+}
+.reviews__img {
+    width: 35px;
+    height: 28px;
+    margin-bottom: 18px;
+}
+
+.reviews-p {
+    color: var(--gray-color);
+}
+
+
+.reviews__h4-red {
+    color: var(--accent-color);
+}
+@media screen and (max-width: 1280px) {
+    .reviews {
+        padding: 100px 15px;
+    }
+    .reviews__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media screen and (max-width: 768px) {
+    .reviews__grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+.contacts {
+    padding-top: 100px;
+    padding-bottom: 150px;
+}
+.contacts .section__h2 {
+    text-align: center;
+    margin-bottom: 59px;
+}
+.contacts__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+.contacts__grid-item {
+    text-align: center;
+    max-width: 255px;
+}
+.contacts__icon {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 14px;
+}
+.contacts__title {
+    color: var(--gray-color);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+}
+.contacts__details {
+    color: var(--dark-color);
+    white-space: pre-line;
+    text-transform: uppercase;
+}
+.contacts-email {
+    text-decoration: none;
+    color: var(--accent-color);
+}
+@media screen and (max-width: 1280px) {
+    .contacts__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .contacts__grid-item {
+        margin-bottom: 25px;
+        max-width: 100%;
+    }
+}
+@media screen and (max-width: 768px) {
+    .contacts__grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .contacts__grid-item {
+        margin-bottom: 25px;
+    }
+}
+.footer {
+    background-color: var(--dark-color);
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.footer__flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.footer__flex-left, .footer__flex-right {
+    color: var(--white-color);
+    font-family: Open Sans;
+    font-size: 16px;
+    font-weight: 400;
+}
+@media screen and (max-width: 1280px) {
+    .footer {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+}
