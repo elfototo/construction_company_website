@@ -1,4 +1,4 @@
-# 🌐 Site Construct
+# 🌐 Site Construct - website markup
 
 ![Site Screenshot](./assets/screen.png)
 
