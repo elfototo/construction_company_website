@@ -6,7 +6,7 @@
   <a href="https://github.com/elfototo/site_konstruct" target="_blank">
     <img src="https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
   </a>
-  <a href="https://elfototo.github.io/site_konstruct/" target="_blank">
+  <a href="(https://elfototo.github.io/construction_company_website/)" target="_blank">
     <img src="https://img.shields.io/badge/Live%20Demo-Visit-2ea44f?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Live Demo">
   </a>
 </p>
@@ -52,7 +52,7 @@ This project is built using:
 ## 🌐 Live Demo
 
 You can view the website live here:  
-👉 [Live Demo](https://elfototo.github.io/site_konstruct/)
+👉 [Live Demo]((https://elfototo.github.io/construction_company_website/))
 
 ---
 
